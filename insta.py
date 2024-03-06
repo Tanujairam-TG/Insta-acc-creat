@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
@@ -7,7 +8,6 @@ from selenium.webdriver.common.by import By
 import random
 import string
 import time
-
 
 from webdriver_manager.chrome import ChromeDriverManager
 
@@ -25,8 +25,9 @@ options.add_argument("--window-size=1920,1080")
 options.add_argument("--start-maximized")
 options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3")
 
-# Initialize WebDriver without specifying a path
-driver = webdriver.Chrome(ChromeDriverManager().install())
+# Initialize WebDriver with the Service class
+service = Service(ChromeDriverManager().install())
+driver = webdriver.Chrome(service=service, options=options)
 
 # Open the Instagram signup page
 driver.get('https://www.instagram.com/accounts/emailsignup/')
@@ -44,13 +45,13 @@ generated_username = random_string(8) # Random username
 default_password = 'none@12345'
 
 # Fill the email, full name, username, and password fields
-driver.find_element_by_name('emailOrPhone').send_keys(email)
-driver.find_element_by_name('fullName').send_keys(random_string(10)) # Random full name
-driver.find_element_by_name('username').send_keys(generated_username)
-driver.find_element_by_name('password').send_keys(default_password)
+driver.find_element(By.NAME, 'emailOrPhone').send_keys(email)
+driver.find_element(By.NAME, 'fullName').send_keys(random_string(10)) # Random full name
+driver.find_element(By.NAME, 'username').send_keys(generated_username)
+driver.find_element(By.NAME, 'password').send_keys(default_password)
 
 # Submit the form to move to the next page
-driver.find_element_by_xpath('//button[text()="Sign up"]').click()
+driver.find_element(By.XPATH, '//button[text()="Sign up"]').click()
 
 # Wait for the date of birth page to load
 WebDriverWait(driver, 10).until(
@@ -62,9 +63,9 @@ default_dob = '09-10-2000'
 
 # Fill the date of birth fields on the second page
 dob_fields = default_dob.split('-')
-driver.find_element_by_name('year').send_keys(dob_fields[2]) # Year
-driver.find_element_by_name('month').send_keys(dob_fields[1]) # Month
-driver.find_element_by_name('day').send_keys(dob_fields[0]) # Day
+driver.find_element(By.NAME, 'year').send_keys(dob_fields[2]) # Year
+driver.find_element(By.NAME, 'month').send_keys(dob_fields[1]) # Month
+driver.find_element(By.NAME, 'day').send_keys(dob_fields[0]) # Day
 
 # Click the 'Next' button after entering the date of birth
 next_button = WebDriverWait(driver, 10).until(
