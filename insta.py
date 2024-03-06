@@ -8,6 +8,9 @@ import random
 import string
 import time
 
+
+from webdriver_manager.chrome import ChromeDriverManager
+
 # Function to generate a random string for the username
 def random_string(length):
     letters = string.ascii_letters
@@ -23,7 +26,7 @@ options.add_argument("--start-maximized")
 options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3")
 
 # Initialize WebDriver without specifying a path
-driver = webdriver.Chrome(options=options)
+driver = webdriver.Chrome(ChromeDriverManager().install())
 
 # Open the Instagram signup page
 driver.get('https://www.instagram.com/accounts/emailsignup/')
