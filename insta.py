@@ -28,3 +28,21 @@ driver.find_element_by_name('password').send_keys(random_string(12)) # Random pa
 
 # Submit the form (uncomment the next line to enable form submission)
 driver.find_element_by_xpath('//button[text()="Sign up"]').click()
+
+
+# ... previous code ...
+
+# After clicking the Sign up button, wait for the OTP input field to appear
+otp_input = WebDriverWait(driver, 10).until(
+    EC.presence_of_element_located((By.NAME, 'otpCode'))
+)
+
+# Ask the user for the OTP
+otp_code = input("Please enter the OTP sent to your email: ")
+
+# Enter the OTP in the input field
+otp_input.send_keys(otp_code)
+
+# Find and click the Verify button (uncomment the next line to enable the action)
+driver.find_element_by_xpath('//button[text()="Verify"]').click()
+
