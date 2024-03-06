@@ -9,7 +9,7 @@ import string
 import time
 
 
-from selenium.webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.chrome import ChromeDriverManager
 
 # Function to generate a random string for the username
 def random_string(length):
