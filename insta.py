@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -12,8 +13,17 @@ def random_string(length):
     letters = string.ascii_letters
     return ''.join(random.choice(letters) for i in range(length))
 
-# Setup the Chrome WebDriver
-driver = webdriver.Chrome()
+# Set up Chrome options for Termux
+options = Options()
+options.add_argument("--no-sandbox")  # Bypass OS security model
+options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
+options.add_argument("--disable-gpu")  # Applicable for headless browsing
+options.add_argument("--window-size=1920,1080")
+options.add_argument("--start-maximized")
+options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3")
+
+# Initialize WebDriver without specifying a path
+driver = webdriver.Chrome(options=options)
 
 # Open the Instagram signup page
 driver.get('https://www.instagram.com/accounts/emailsignup/')
