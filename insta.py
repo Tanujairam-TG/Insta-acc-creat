@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
@@ -23,9 +24,11 @@ options.add_argument("--window-size=1920,1080")
 options.add_argument("--start-maximized")
 options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3")
 
-# Initialize WebDriver with the specified ChromeDriver path
-chromedriver_path = '/data/data/com.termux/files/home/chromedriver'
-driver = webdriver.Chrome(executable_path=chromedriver_path, options=options)
+# Specify the path to ChromeDriver you downloaded
+service = Service(executable_path='/data/data/com.termux/files/home/chromedriver')
+
+# Initialize WebDriver with the Service class
+driver = webdriver.Chrome(service=service, options=options)
 
 # Open the Instagram signup page
 driver.get('https://www.instagram.com/accounts/emailsignup/')
