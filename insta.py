@@ -50,3 +50,12 @@ driver.find_element_by_name('month').send_keys(dob_fields[1]) # Month
 driver.find_element_by_name('day').send_keys(dob_fields[0]) # Day
 
 # Continue with the rest of the signup process as needed
+# ... previous code ...
+
+# Click the 'Next' button after entering the date of birth
+next_button = WebDriverWait(driver, 10).until(
+    EC.element_to_be_clickable((By.XPATH, '//button[text()="Next"]'))
+)
+next_button.click()
+
+# Continue with the rest of the signup process as needed
