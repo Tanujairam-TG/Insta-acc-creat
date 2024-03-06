@@ -7,7 +7,7 @@ import random
 import string
 import time
 
-# Function to generate a random string
+# Function to generate a random string for the username
 def random_string(length):
     letters = string.ascii_letters
     return ''.join(random.choice(letters) for i in range(length))
@@ -24,18 +24,22 @@ time.sleep(5)
 # Ask for the user's email
 email = input("Please enter your email: ")
 
-# Fill the email and full name fields
+# Generate a random username
+generated_username = random_string(8) # Random username
+
+# Set the default password
+default_password = 'none@12345'
+
+# Fill the email, full name, username, and password fields
 driver.find_element_by_name('emailOrPhone').send_keys(email)
 driver.find_element_by_name('fullName').send_keys(random_string(10)) # Random full name
-
-# Fill the username and password fields
-driver.find_element_by_name('username').send_keys(random_string(8)) # Random username
-driver.find_element_by_name('password').send_keys(random_string(12)) # Random password
+driver.find_element_by_name('username').send_keys(generated_username)
+driver.find_element_by_name('password').send_keys(default_password)
 
 # Submit the form to move to the next page
 driver.find_element_by_xpath('//button[text()="Sign up"]').click()
 
-# Wait for the second page where the date of birth is asked
+# Wait for the date of birth page to load
 WebDriverWait(driver, 10).until(
     EC.presence_of_element_located((By.NAME, 'birthday'))
 )
@@ -48,11 +52,6 @@ dob_fields = default_dob.split('-')
 driver.find_element_by_name('year').send_keys(dob_fields[2]) # Year
 driver.find_element_by_name('month').send_keys(dob_fields[1]) # Month
 driver.find_element_by_name('day').send_keys(dob_fields[0]) # Day
-
-# Continue with the rest of the signup process as needed
-# ... previous code ...
-
-# ... previous code that handles the signup and date of birth input ...
 
 # Click the 'Next' button after entering the date of birth
 next_button = WebDriverWait(driver, 10).until(
@@ -77,5 +76,8 @@ verify_button = WebDriverWait(driver, 10).until(
 )
 verify_button.click()
 
-# The script would continue with any further steps required to complete the signup process
+# After successful verification, print the username and password
+print(f"Username: {generated_username}")
+print(f"Password: {default_password}")
 
+# Continue with the rest of the signup process as needed
